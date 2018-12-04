@@ -8,6 +8,8 @@ class MasterMindApp:
         self.playertwo = StringVar()
         self.level = StringVar()
         self.level.trace("w", self.update_level_observer)
+        self.debug_mode = BooleanVar()
+        self.debug_mode.trace("w", self.update_mode_observer)
 
         # ----- widgets:
         # --- entries :
@@ -17,6 +19,7 @@ class MasterMindApp:
         # --- labels :
         self.players_selection = Label(master, text="Veuillez enregistrer les 2 joueurs :")
         self.level_selection = Label(master, text="Choix du niveau de diffuculté :")
+        self.mode_selection = Label(master, text="Activer/Désactiver le mode debug :")
 
         # --- buttons :
         self.new_game_button = Button(master, text="Commencer une nouvelle partie", command=self.start_game)
@@ -26,6 +29,9 @@ class MasterMindApp:
         # --- radios :
         self.level_one_radio = Radiobutton(master, text="Facile", value="facile", variable=self.level)
         self.level_two_radio = Radiobutton(master, text="Moyen", value= "moyen", variable=self.level)
+
+        # --- checkbox :
+        self.mode_debug_check = Checkbutton(master, text="Mode debug", variable=self.debug_mode, onvalue=1, offvalue=0)
 
         self.new_game_button.pack()
         self.test_btn.pack()
@@ -43,6 +49,8 @@ class MasterMindApp:
         self.level_selection.pack()
         self.level_one_radio.pack()
         self.level_two_radio.pack()
+        self.mode_selection.pack()
+        self.mode_debug_check.pack()
 
     def test(self):
         print(self.newGame.player1.nickname)
@@ -50,6 +58,11 @@ class MasterMindApp:
     def update_level_observer(self, *args):
         self.newGame.set_level(self.level.get())
         print("Niveau choisi : {}".format(self.newGame.level))
+
+    def update_mode_observer(self, *args):
+        self.newGame.set_mode(self.debug_mode.get())
+        print("Mode debug : {}".format(self.newGame.debug_mode))
+
 
 
 def main():

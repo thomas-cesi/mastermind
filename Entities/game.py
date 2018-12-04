@@ -17,8 +17,6 @@ class Game:
         "attempts": 10
     }
 
-    _modes_availbale = ["standard", "debug"]
-
     def __init__(self):
         self.attempts_counter = 0
         self.attempts_array = []
@@ -34,7 +32,8 @@ class Game:
             self.level = self._level_two
 
     def set_mode(self, mode):
-        self.mode = mode
+        self.debug_mode = mode
+
 
     def set_Solution(self, solution):
         self.solution = solution
