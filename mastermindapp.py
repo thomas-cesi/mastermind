@@ -1,6 +1,7 @@
 from Entities import game as g
 from Entities import piece as p
 from tkinter import *
+from tkinter import messagebox
 
 class MasterMindApp:
     def __init__(self, master):
@@ -9,7 +10,6 @@ class MasterMindApp:
 
         # --- Configuration de la partie :
         self.score = StringVar()
-        self.score.trace("w", self.update_score_observer)
         self.playerone = StringVar()
         self.playertwo = StringVar()
         self.level = StringVar()
@@ -80,19 +80,31 @@ class MasterMindApp:
     def attempts(self):
         print("Check")
         self.newGame.attempts_counter += 1
+        if self.newGame.attempts_counter > self.newGame.level['attempts']:
+            self.game_over()
+            return
         self.attempts = []
         for piece in self.newGame.try_entry.define_combination():
             self.attempts.append(piece.piece_color.get())
-        for i, color in enumerate(self.attempts):
-            if color[i] == self.solution[i]:
-                print('yeah')
-                self.score + '|| ' + color[i] + '= ||'
-            elif color[i] in self.solution:
-                print('pas loin')
-                self.score + '|| ' + color[i] + '~ ||'
-            else :
-                self.score + '|| ---- ||'
+        print(self.solution)
+        print(self.attempts)
+        if self.solution == self.attempts:
+            self.newGame.victory = True
+            self.victory()
+            return
+        self.score = ""
+        for i, att in enumerate(self.attempts):
+            if att == self.solution[i]:
+                self.score += '|| ' + att + ' =||'
+            elif att in self.solution:
+                self.score += '|| ' + att + ' ~||'
+            else:
+                self.score += '|| ---- ||'
+        print(self.score)
         print("Tentative {}".format(self.newGame.attempts_counter))
 
-    def update_score_observer(self):
-        self.score_lable.set(self.score)
+    def game_over(self):
+        messagebox.showinfo("GAME OVER", "partie terminée")
+
+    def victory(self):
+        messagebox.showinfo("VICTOIRE", "partie terminée")

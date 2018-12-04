@@ -27,7 +27,7 @@ class Piece:
 
     def update_color_piece(self, e):
         w = e.widget
-        index = int(w.curselection()[0])
+        index = w.curselection()[0]
         value = w.get(index)
         self.piece_color.set(value)
         print("color: {}".format(value))
