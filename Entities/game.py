@@ -1,4 +1,5 @@
 from Entities import player as p
+from Entities import combination as c
 
 class Game:
     """docstring for Game"""
@@ -20,6 +21,7 @@ class Game:
     def __init__(self):
         self.attempts_counter = 0
         self.attempts_array = []
+        self.victory = False
 
     def set_players(self, player1, player2):
         self.player1 = p.Player(player1)
@@ -34,6 +36,8 @@ class Game:
     def set_mode(self, mode):
         self.debug_mode = mode
 
+    def set_solution_entry(self, master):
+        self.solution_entry = c.Combination(self.level['name'], self.level["combinationLength"], master)
 
-    def set_Solution(self, solution):
-        self.solution = solution
+    def set_try_entry(self, master):
+        self.try_entry = c.Combination(self.level['name'], self.level["combinationLength"], master)
